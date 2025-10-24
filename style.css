@@ -1,0 +1,790 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;600;700&display=swap');
+
+:root {
+  --color-alert-red: #e63946;
+  --color-accent: var(--color-alert-red);
+  --color-interactive-blue: #173dd4;
+  --color-main: #f1faee;
+  --color-secondary: #555555;
+  --color-bg: #0a0a0a;
+  --color-border: #222222;
+  --color-text: #c0c0c0;
+  --color-paragraph: var(--color-text);
+  --color-code: #8e8e8e;
+}
+
+/* -------------------------------- */
+/* --- PODSTAWOWE STYLE STRONY I RESET --- */
+/* -------------------------------- */
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-paragraph);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  margin-top: 70px;
+  max-width: 800px;
+  padding: 20px;
+  line-height: 1.7;
+  box-sizing: border-box;
+}
+
+/* Ustawienie marginesu dla Manifestu/Instrukcji, nadpisując globalny margin-top */
+body:not([data-view='main']) {
+  margin: 60px auto 40px;
+  margin-top: 60px;
+}
+
+/* -------------------------------- */
+/* --- ANIMACJA I TŁO (Dla głównej strony z rolkami) --- */
+/* -------------------------------- */
+
+/* Użyte na głównej stronie, by podnieść zawartość ponad tło */
+body > *:not(.background-css) {
+  position: relative;
+  z-index: 1;
+  margin-top: 0;
+}
+
+.background-css {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.animated-line {
+  position: absolute;
+  bottom: 35%;
+  width: 100%;
+  height: 2px;
+  background: var(--color-border);
+  overflow: hidden;
+}
+
+.light {
+  position: absolute;
+  top: -10px;
+  width: 100px;
+  height: 20px;
+  background: radial-gradient(
+    circle,
+    var(--color-alert-red) 0%,
+    rgba(0, 0, 0, 0) 70%
+  );
+  animation: move-light 4s linear infinite;
+  pointer-events: none;
+  filter: blur(4px);
+}
+
+@keyframes move-light {
+  0% {
+    left: -100px;
+  }
+  100% {
+    left: 100%;
+  }
+}
+
+/* --- Efekt Błysku (Flash) --- */
+.flash {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--color-main);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 2;
+  animation: none;
+}
+
+@keyframes flashEffect {
+  0% {
+    opacity: 0;
+  }
+  20% {
+    opacity: 0.8;
+  }
+  50% {
+    opacity: 0.4;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+/* -------------------------------- */
+/* --- WIDOK GŁÓWNY (Rolki i Przyciski) --- */
+/* -------------------------------- */
+
+.top-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+}
+
+/* --- Przyciski Strzałek (Kierunkowe) --- */
+.arrow-btn {
+  width: 40px;
+  height: 40px;
+  font-size: 20px;
+  font-weight: bold;
+  background-color: var(--color-bg);
+  border: 1px solid var(--color-secondary);
+  color: var(--color-secondary);
+  border-radius: 50%;
+  cursor: pointer;
+  flex-shrink: 0;
+  user-select: none;
+  transition: all 0.3s ease;
+  margin: 20px 20px;
+  font-family: 'Orbitron', sans-serif;
+}
+
+.arrow-btn-left {
+  margin: 20px 20px 20px -37px;
+}
+
+/* GRANATOWY HOVER (Interakcja STRZAŁEK) */
+.arrow-btn:not(.active):hover {
+  color: var(--color-interactive-blue);
+  border: none;
+  border-bottom: 2px solid var(--color-interactive-blue);
+  box-shadow: 0 4px 15px 0px rgba(23, 61, 212, 0.7);
+  font-weight: bold;
+  padding-top: 1px;
+  background-color: rgba(70, 68, 68, 0.3);
+}
+
+/* CZERWONY AKTYWNY STAN (Klakson/Alarm) */
+.arrow-btn.active,
+.arrow-btn.active:hover {
+  background-color: rgb(196, 5, 5);
+  color: rgb(196, 5, 5);
+  box-shadow: 0px 0px 20px 7px rgb(196, 5, 5);
+  border: 5px double rgb(164, 9, 9);
+  transform: scale(1.1);
+}
+
+/* --- Kontenery Rolek --- */
+.rolka-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  top: -100%;
+  left: 0;
+  opacity: 0;
+  animation-fill-mode: forwards;
+  animation-name: slideFromTop;
+  animation-duration: 0.6s;
+  animation-timing-function: ease-out;
+}
+
+@keyframes slideFromTop {
+  from {
+    top: -100%;
+    opacity: 0;
+  }
+  to {
+    top: 0;
+    opacity: 1;
+  }
+}
+
+.rolka-wrapper {
+  position: relative;
+}
+
+.windows {
+  display: flex;
+  width: 135px;
+  height: 750px;
+  border: 2px solid var(--color-secondary);
+  overflow-x: auto;
+  overflow-y: auto;
+  background-color: var(--color-bg);
+  flex-wrap: nowrap;
+  cursor: pointer;
+}
+
+.img-wrapper {
+  display: inline-block;
+  transition: transform 0.3s ease;
+  margin-bottom: 50px;
+}
+
+.img-wrapper img {
+  display: block;
+  height: auto;
+  max-width: none;
+  max-height: 1500px;
+  user-select: none;
+  pointer-events: none;
+  transition: filter 0.3s ease;
+}
+
+/* Scrollbar - GRANATOWY HOVER */
+.windows::-webkit-scrollbar {
+  width: 10px;
+  background-color: var(--color-border);
+}
+
+.windows::-webkit-scrollbar-thumb {
+  background-color: var(--color-secondary);
+  border-radius: 5px;
+  border: 2px solid rgba(47, 47, 47, 0.5);
+}
+
+.windows::-webkit-scrollbar-thumb:hover {
+  background-color: var(--color-interactive-blue);
+  padding: 2px;
+  border: 2px solid var(--color-border);
+}
+
+.windows::-webkit-scrollbar-corner {
+  background-color: var(--color-border);
+}
+
+/* --- Przyciski Zoom - GRANATOWY HOVER --- */
+.zoom-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.zoom-buttons button {
+  background-color: var(--color-bg);
+  color: var(--color-secondary);
+  border: 1px solid var(--color-secondary);
+  padding: 5px 10px;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  user-select: none;
+  font-family: 'Orbitron', sans-serif;
+}
+
+.zoom-buttons button:hover {
+  color: var(--color-interactive-blue);
+  border: none;
+  border-bottom: 2px solid var(--color-interactive-blue);
+  box-shadow: 0 4px 15px 0px rgba(23, 61, 212, 0.7);
+  font-weight: bold;
+  padding-top: 1px;
+  background-color: rgba(70, 68, 68, 0.5);
+}
+
+/* --- Przycisk Reset (ALT/OPTION) - NOWY STYL --- */
+.footer-reset {
+  color: rgb(70, 68, 68);
+  display: flex;
+  font-size: 14px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin-top: -725px;
+}
+
+.footer-reset .footer-button {
+  color: rgb(70, 68, 68);
+  border: 1px solid rgb(70, 68, 68);
+  padding: 6px 6px 11px;
+  border-radius: 5px;
+  width: 50px;
+  height: 45px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  font-family: 'Orbitron', sans-serif;
+  transition: all 0.3s ease;
+}
+
+/* GRANATOWY HOVER dla RESET */
+.footer-reset .footer-button:hover {
+  color: var(--color-interactive-blue);
+  border: none;
+  border-bottom: 2px solid var(--color-interactive-blue);
+  box-shadow: 0 4px 15px 0px var(--color-interactive-blue);
+  font-weight: bold;
+  padding-top: 1px;
+  background-color: rgba(70, 68, 68, 0.5);
+}
+
+/* --- Pasek Nawigacyjny (Manifest/Instrukcja) - GRANATOWY HOVER --- */
+.footer-bar {
+  position: fixed;
+  bottom: 100px;
+  right: 0px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  z-index: 1000;
+}
+
+.footer-bar .footer-button {
+  position: relative;
+  width: 150px;
+  height: 16px;
+  padding: 15px;
+  background-color: var(--color-secondary);
+  color: var(--color-bg);
+  text-align: center;
+  text-decoration: none;
+  border-radius: 10px 0 0 10px;
+  cursor: pointer;
+  right: -20px;
+  transition: right 0.3s ease, background-color 0.3s ease, color 0.3s ease;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 10px;
+}
+
+.footer-bar .footer-button::before {
+  content: '◀';
+  position: absolute;
+  left: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 10px;
+  transition: opacity 0.3s ease, left 0.3s ease;
+  opacity: 1;
+  color: var(--color-bg);
+  pointer-events: none;
+  user-select: none;
+}
+
+.footer-bar .footer-button:hover {
+  right: 0;
+  background-color: var(--color-interactive-blue);
+  color: var(--color-main);
+}
+
+.footer-bar .footer-button:hover::before {
+  opacity: 0;
+  left: 0;
+}
+
+/* -------------------------------- */
+/* --- STYLE MANIFESTU/INSTRUKCJI (Content Pages) --- */
+/* -------------------------------- */
+
+/* --- Nagłówek i Nawigacja --- */
+.header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  border-bottom: 2px solid var(--color-border);
+  padding-bottom: 15px;
+  margin-bottom: 20px;
+}
+
+.header-title-group {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+h1 {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 36px;
+  color: var(--color-accent);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  text-shadow: 0 0 10px rgba(230, 57, 70, 0.7);
+  margin: 0;
+}
+
+.header-subtitle {
+  display: block;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 13px;
+  color: var(--color-paragraph);
+  margin-top: 5px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+
+/* Styl dla statusu */
+.manifest-status {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 11px;
+  color: var(--color-secondary);
+  background-color: #1a1a1a;
+  padding: 4px 8px;
+  margin-top: -10px;
+  margin-bottom: 40px;
+  display: inline-block;
+  border: 1px solid var(--color-border);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.buttons {
+  display: flex;
+  gap: 15px;
+}
+
+/* Przyciski w nagłówku (ciemna szarość/biały hover) */
+a.button {
+  background-color: transparent;
+  border: 1px solid var(--color-secondary);
+  color: var(--color-secondary);
+  padding: 8px 14px;
+  border-radius: 3px;
+  text-decoration: none;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 13px;
+  user-select: none;
+  transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+}
+
+a.button:hover {
+  background-color: var(--color-secondary);
+  color: var(--color-main);
+  box-shadow: 0 0 10px rgba(85, 85, 85, 0.5);
+}
+
+/* --- Sekcje Treści --- */
+.intro-paragraph {
+  font-size: 16px;
+  color: var(--color-main);
+  font-weight: 600;
+  margin-bottom: 30px;
+  text-transform: uppercase;
+}
+
+h2 {
+  position: relative;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 20px;
+  margin-top: 50px;
+  margin-bottom: 20px;
+  color: var(--color-main);
+  padding-left: 25px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  overflow: hidden;
+}
+
+/* Animowana linia */
+h2::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 5px;
+  height: 0;
+  background-color: var(--color-accent);
+}
+
+h2 span {
+  display: inline-block;
+  opacity: 0;
+  transform: translateX(60px);
+}
+
+/* Klasy Animacji dla H2 (Manifest) */
+h2.is-visible::before {
+  animation: grow 0.4s forwards;
+}
+h2.is-visible span {
+  animation: slideInText 0.6s forwards;
+  animation-delay: 0.4s;
+}
+
+@keyframes grow {
+  from {
+    height: 0;
+  }
+  to {
+    height: 100%;
+  }
+}
+
+@keyframes slideInText {
+  from {
+    opacity: 0;
+    transform: translateX(60px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Alternatywna wersja H2 z Instrukcji (symbol //) - do użycia jako .h2-command */
+.h2-command {
+  padding-left: 25px;
+}
+.h2-command::before {
+  content: '//';
+  position: absolute;
+  left: 0;
+  width: 15px;
+  height: 100%;
+  color: var(--color-accent);
+  font-size: 18px;
+  opacity: 0.8;
+  top: 0;
+  transform: none;
+  animation: none;
+}
+.h2-command.is-visible span {
+  animation: none;
+  opacity: 1;
+  transform: none;
+}
+
+p {
+  margin-bottom: 18px;
+  text-align: justify;
+  font-size: 15px;
+}
+
+strong {
+  color: var(--color-main);
+  font-weight: 700;
+}
+
+/* Styl dla list operacyjnych (Instrukcja) */
+ul {
+  list-style: none;
+  padding-left: 0;
+  margin-top: 20px;
+}
+
+li {
+  font-family: 'Orbitron', sans-serif;
+  margin-bottom: 15px;
+  border-left: 3px solid var(--color-border);
+  padding-left: 15px;
+}
+
+.command-key {
+  color: var(--color-accent);
+  font-weight: 700;
+  letter-spacing: 1px;
+  margin-right: 10px;
+  display: inline-block;
+  width: 100px;
+  text-transform: uppercase;
+}
+
+.action-desc {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: var(--color-paragraph);
+  font-weight: 400;
+  text-transform: none;
+}
+
+hr {
+  border: none;
+  border-top: 1px solid var(--color-border);
+  margin: 40px 0;
+  opacity: 0.3;
+  width: 0;
+  transition: width 0.6s ease;
+}
+
+hr.visible {
+  width: 100%;
+}
+/* ---------------------------------
+SEKCJA: STYLIZACJA ZDJĘCIA INSPIRUJĄCEGO (ROBAKOWSKI)
+---------------------------------*/
+
+.robakowski-figure {
+  /* Ustawienia kontenera <figure> */
+  margin: 20px 0; /* Marginalne odstępy górny/dolny */
+  padding: 0;
+}
+
+.robakowski-figure img {
+  /* Ustawienia obrazu */
+  max-width: 100%; /* Obraz jest responsywny */
+  height: auto;
+  display: block; /* Umożliwia centrowanie bloku */
+  margin: 0 auto; /* Centrowanie obrazu */
+  border: 1px solid #333; /* Estetyczna ramka pasująca do dark mode */
+}
+
+.robakowski-figure figcaption {
+  /* Ustawienia podpisu */
+  text-align: center;
+  font-size: 0.85em;
+  color: #ccc; /* Jasnoszary kolor podpisu */
+  margin-top: 10px;
+}
+
+/* ---------------------------------*/
+/* --- RESPONSIVE --- */
+/* -------------------------------- */
+
+@media (max-width: 600px) {
+  .header {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  .header-title-group {
+    align-items: center;
+    margin-bottom: 15px;
+  }
+  h1 {
+    font-size: 28px;
+  }
+  .buttons {
+    flex-direction: column;
+    width: 100%;
+    gap: 10px;
+  }
+  a.button {
+    width: 100%;
+    text-align: center;
+  }
+  h2,
+  .h2-command {
+    padding-left: 15px;
+    font-size: 18px;
+  }
+  /* Dopasowanie symbolu dla responsywności Instrukcji */
+  .h2-command::before {
+    content: '>';
+    width: 10px;
+    font-size: 16px;
+  }
+  .command-key {
+    width: 70px;
+    margin-right: 5px;
+  }
+  .robakowski-figure {
+    /* Zmniejsz marginesy, aby oszczędzić pionową przestrzeń */
+    margin: 15px 0;
+  }
+
+  .robakowski-figure figcaption {
+    /* Zmniejsz czcionkę podpisu, aby była bardziej kompaktowa */
+    font-size: 0.75em;
+    margin-top: 8px;
+  }
+}
+/* --- RESPONSYWNOŚĆ: DUŻE EKRANY / LAPTOPY --- */
+@media (max-width: 1200px) {
+  .top-row {
+    padding: 0 10px;
+  }
+
+  .arrow-btn {
+    margin: 20px 10px;
+    width: 35px;
+    height: 35px;
+  }
+
+  .windows {
+    width: 100px;
+    height: 600px;
+  }
+}
+
+/* --- MNIEJSZY TABLET (ok. 900px i mniej) --- */
+@media (max-width: 900px) {
+  .windows {
+    width: 100px;
+    height: 500px;
+  }
+
+  .arrow-btn {
+    margin: 15px 5px;
+    width: 30px;
+    height: 30px;
+    font-size: 18px;
+  }
+}
+
+/* --- SMARTFON HORYZONTALNIE (ok. 650px i mniej) --- */
+@media (max-width: 650px) {
+  .windows {
+    width: 80px;
+    height: 400px;
+  }
+}
+
+/* --- SMARTFON WERTYKALNIE (ok. 480px i mniej) --- */
+@media (max-width: 480px) {
+  .windows {
+    width: 70px;
+    height: 350px;
+  }
+
+  .top-row {
+    padding: 0;
+  }
+
+  .arrow-btn {
+    margin: 10px 0;
+    width: 25px;
+    height: 25px;
+    font-size: 16px;
+  }
+}
+/* --- RESPONSYWNOŚĆ DLA FOOTER-BAR (Instrukcja/Opis) --- */
+@media (max-width: 768px) {
+  /* Przeniesienie paska na dół ekranu i dopasowanie układu */
+  .footer-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-around;
+    padding: 0;
+    margin: 0;
+    border-top: 1px solid var(--color-border);
+    background-color: var(--color-bg);
+    z-index: 10000;
+  }
+
+  /* Styl przycisków w pasku na małych ekranach */
+  .footer-bar .footer-button {
+    width: 50%;
+    height: auto;
+    padding: 15px 5px;
+    border-radius: 0;
+    right: 0;
+    text-align: center;
+    font-size: 11px;
+    transition: none; /* usuwa animacje hover dla responsywności */
+  }
+
+  /* Usunięcie strzałki przed tekstem przycisku */
+  .footer-bar .footer-button::before {
+    content: none;
+  }
+
+  /* Zapewnienie miejsca na dole, by treść nie była zasłonięta */
+  body {
+    padding-bottom: 70px;
+  }
+
+  /* Hover przycisków pozostaje prosty */
+  .footer-bar .footer-button:hover {
+    right: 0;
+  }
+}

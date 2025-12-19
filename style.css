@@ -3,8 +3,8 @@
 
 :root {
   --color-alert-red: #e63946;
-  --color-accent: var(--color-alert-red);
-  --color-interactive-blue: #173dd4;
+  --color-accent: blue;
+  --color-interactive-blue: blue;
   --color-main: #f1faee;
   --color-secondary: #555555;
   --color-bg: #0a0a0a;
@@ -14,37 +14,31 @@
   --color-code: #8e8e8e;
 }
 
-/* -------------------------------- */
-/* --- PODSTAWOWE STYLE STRONY I RESET --- */
-/* -------------------------------- */
-
 body {
   background-color: var(--color-bg);
   color: var(--color-paragraph);
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   margin: 0;
-  margin-top: 70px;
-  max-width: 800px;
-  padding: 20px;
   line-height: 1.7;
   box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 
-/* Ustawienie marginesu dla Manifestu/Instrukcji, nadpisując globalny margin-top */
 body:not([data-view='main']) {
-  margin: 60px auto 40px;
-  margin-top: 60px;
+  margin: 30px auto 40px;
 }
 
-/* -------------------------------- */
-/* --- ANIMACJA I TŁO (Dla głównej strony z rolkami) --- */
-/* -------------------------------- */
-
-/* Użyte na głównej stronie, by podnieść zawartość ponad tło */
 body > *:not(.background-css) {
   position: relative;
   z-index: 1;
   margin-top: 0;
+}
+
+.body-index {
+  overflow: hidden;
 }
 
 .background-css {
@@ -68,29 +62,20 @@ body > *:not(.background-css) {
 
 .light {
   position: absolute;
-  top: -10px;
+  top: 0px;
   width: 100px;
   height: 20px;
-  background: radial-gradient(
-    circle,
-    var(--color-alert-red) 0%,
-    rgba(0, 0, 0, 0) 70%
-  );
+  background: radial-gradient(circle, var(--color-alert-red) 0%, rgba(0, 0, 0, 0) 70%);
   animation: move-light 4s linear infinite;
   pointer-events: none;
   filter: blur(4px);
 }
 
 @keyframes move-light {
-  0% {
-    left: -100px;
-  }
-  100% {
-    left: 100%;
-  }
+  0% { left: -100px; }
+  100% { left: 100%; }
 }
 
-/* --- Efekt Błysku (Flash) --- */
 .flash {
   position: absolute;
   top: 0;
@@ -105,40 +90,27 @@ body > *:not(.background-css) {
 }
 
 @keyframes flashEffect {
-  0% {
-    opacity: 0;
-  }
-  20% {
-    opacity: 0.8;
-  }
-  50% {
-    opacity: 0.4;
-  }
-  100% {
-    opacity: 0;
-  }
+  0% { opacity: 0; }
+  20% { opacity: 0.8; }
+  50% { opacity: 0.4; }
+  100% { opacity: 0; }
 }
-
-/* -------------------------------- */
-/* --- WIDOK GŁÓWNY (Rolki i Przyciski) --- */
-/* -------------------------------- */
 
 .top-row {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: start;
 }
 
 .container {
   display: flex;
   justify-content: center;
-  gap: 5px;
+  gap: 3px;
 }
 
-/* --- Przyciski Strzałek (Kierunkowe) --- */
 .arrow-btn {
-  width: 40px;
-  height: 40px;
+  width: 50px;
+  height: 50px;
   font-size: 20px;
   font-weight: bold;
   background-color: var(--color-bg);
@@ -149,7 +121,7 @@ body > *:not(.background-css) {
   flex-shrink: 0;
   user-select: none;
   transition: all 0.3s ease;
-  margin: 20px 20px;
+  margin: 20px;
   font-family: 'Orbitron', sans-serif;
 }
 
@@ -157,7 +129,6 @@ body > *:not(.background-css) {
   margin: 20px 20px 20px -37px;
 }
 
-/* GRANATOWY HOVER (Interakcja STRZAŁEK) */
 .arrow-btn:not(.active):hover {
   color: var(--color-interactive-blue);
   border: none;
@@ -168,7 +139,6 @@ body > *:not(.background-css) {
   background-color: rgba(70, 68, 68, 0.3);
 }
 
-/* CZERWONY AKTYWNY STAN (Klakson/Alarm) */
 .arrow-btn.active,
 .arrow-btn.active:hover {
   background-color: rgb(196, 5, 5);
@@ -178,7 +148,6 @@ body > *:not(.background-css) {
   transform: scale(1.1);
 }
 
-/* --- Kontenery Rolek --- */
 .rolka-container {
   display: flex;
   flex-direction: column;
@@ -195,14 +164,8 @@ body > *:not(.background-css) {
 }
 
 @keyframes slideFromTop {
-  from {
-    top: -100%;
-    opacity: 0;
-  }
-  to {
-    top: 0;
-    opacity: 1;
-  }
+  from { top: -100%; opacity: 0; }
+  to { top: 0; opacity: 1; }
 }
 
 .rolka-wrapper {
@@ -237,16 +200,15 @@ body > *:not(.background-css) {
   transition: filter 0.3s ease;
 }
 
-/* Scrollbar - GRANATOWY HOVER */
 .windows::-webkit-scrollbar {
-  width: 10px;
   background-color: var(--color-border);
+  height: 20px;
 }
 
 .windows::-webkit-scrollbar-thumb {
   background-color: var(--color-secondary);
   border-radius: 5px;
-  border: 2px solid rgba(47, 47, 47, 0.5);
+  width: 40px;
 }
 
 .windows::-webkit-scrollbar-thumb:hover {
@@ -259,7 +221,6 @@ body > *:not(.background-css) {
   background-color: var(--color-border);
 }
 
-/* --- Przyciski Zoom - GRANATOWY HOVER --- */
 .zoom-buttons {
   display: flex;
   justify-content: center;
@@ -271,8 +232,8 @@ body > *:not(.background-css) {
   background-color: var(--color-bg);
   color: var(--color-secondary);
   border: 1px solid var(--color-secondary);
-  padding: 5px 10px;
-  font-size: 16px;
+  padding: 10px 20px;
+  font-size: 25px;
   border-radius: 5px;
   cursor: pointer;
   user-select: none;
@@ -289,13 +250,13 @@ body > *:not(.background-css) {
   background-color: rgba(70, 68, 68, 0.5);
 }
 
-/* --- Przycisk Reset (ALT/OPTION) - NOWY STYL --- */
 .footer-reset {
   color: rgb(70, 68, 68);
   display: flex;
   font-size: 14px;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  margin-top: -725px;
+  margin-top: -625px;
+  right: 0;
 }
 
 .footer-reset .footer-button {
@@ -313,7 +274,6 @@ body > *:not(.background-css) {
   transition: all 0.3s ease;
 }
 
-/* GRANATOWY HOVER dla RESET */
 .footer-reset .footer-button:hover {
   color: var(--color-interactive-blue);
   border: none;
@@ -324,64 +284,40 @@ body > *:not(.background-css) {
   background-color: rgba(70, 68, 68, 0.5);
 }
 
-/* --- Pasek Nawigacyjny (Manifest/Instrukcja) - GRANATOWY HOVER --- */
 .footer-bar {
+  width: 100%;
+  left: 0;
   position: fixed;
-  bottom: 100px;
-  right: 0px;
   display: flex;
+  align-items: end;
   flex-direction: column;
   gap: 20px;
   z-index: 1000;
+  top: -80vh;
 }
 
 .footer-bar .footer-button {
   position: relative;
-  width: 150px;
-  height: 16px;
-  padding: 15px;
-  background-color: var(--color-secondary);
+  width: 100px;
+  height: 10px;
+  padding: 9px 9px 16px;
+  background-color: rgb(57, 6, 179);
   color: var(--color-bg);
   text-align: center;
   text-decoration: none;
-  border-radius: 10px 0 0 10px;
+  border-radius: 2px 0 0 2px;
   cursor: pointer;
-  right: -20px;
+  right: 0;
   transition: right 0.3s ease, background-color 0.3s ease, color 0.3s ease;
   font-family: 'Orbitron', sans-serif;
-  font-size: 10px;
-}
-
-.footer-bar .footer-button::before {
-  content: '◀';
-  position: absolute;
-  left: 8px;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 10px;
-  transition: opacity 0.3s ease, left 0.3s ease;
-  opacity: 1;
-  color: var(--color-bg);
-  pointer-events: none;
-  user-select: none;
+  font-size: 11px;
 }
 
 .footer-bar .footer-button:hover {
-  right: 0;
   background-color: var(--color-interactive-blue);
   color: var(--color-main);
 }
 
-.footer-bar .footer-button:hover::before {
-  opacity: 0;
-  left: 0;
-}
-
-/* -------------------------------- */
-/* --- STYLE MANIFESTU/INSTRUKCJI (Content Pages) --- */
-/* -------------------------------- */
-
-/* --- Nagłówek i Nawigacja --- */
 .header {
   display: flex;
   align-items: flex-end;
@@ -418,7 +354,6 @@ h1 {
   text-transform: uppercase;
 }
 
-/* Styl dla statusu */
 .manifest-status {
   font-family: 'Orbitron', sans-serif;
   font-size: 11px;
@@ -438,7 +373,6 @@ h1 {
   gap: 15px;
 }
 
-/* Przyciski w nagłówku (ciemna szarość/biały hover) */
 a.button {
   background-color: transparent;
   border: 1px solid var(--color-secondary);
@@ -454,12 +388,11 @@ a.button {
 }
 
 a.button:hover {
-  background-color: var(--color-secondary);
+  background-color: var(--color-interactive-blue);
   color: var(--color-main);
   box-shadow: 0 0 10px rgba(85, 85, 85, 0.5);
 }
 
-/* --- Sekcje Treści --- */
 .intro-paragraph {
   font-size: 16px;
   color: var(--color-main);
@@ -481,7 +414,6 @@ h2 {
   overflow: hidden;
 }
 
-/* Animowana linia */
 h2::before {
   content: '';
   position: absolute;
@@ -499,39 +431,29 @@ h2 span {
   transform: translateX(60px);
 }
 
-/* Klasy Animacji dla H2 (Manifest) */
 h2.is-visible::before {
   animation: grow 0.4s forwards;
 }
+
 h2.is-visible span {
   animation: slideInText 0.6s forwards;
   animation-delay: 0.4s;
 }
 
 @keyframes grow {
-  from {
-    height: 0;
-  }
-  to {
-    height: 100%;
-  }
+  from { height: 0; }
+  to { height: 100%; }
 }
 
 @keyframes slideInText {
-  from {
-    opacity: 0;
-    transform: translateX(60px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
+  from { opacity: 0; transform: translateX(60px); }
+  to { opacity: 1; transform: translateX(0); }
 }
 
-/* Alternatywna wersja H2 z Instrukcji (symbol //) - do użycia jako .h2-command */
 .h2-command {
   padding-left: 25px;
 }
+
 .h2-command::before {
   content: '//';
   position: absolute;
@@ -545,6 +467,7 @@ h2.is-visible span {
   transform: none;
   animation: none;
 }
+
 .h2-command.is-visible span {
   animation: none;
   opacity: 1;
@@ -562,7 +485,6 @@ strong {
   font-weight: 700;
 }
 
-/* Styl dla list operacyjnych (Instrukcja) */
 ul {
   list-style: none;
   padding-left: 0;
@@ -595,7 +517,7 @@ li {
 
 hr {
   border: none;
-  border-top: 1px solid var(--color-border);
+  border-top: 1px solid rgb(204, 204, 204,0.7);
   margin: 40px 0;
   opacity: 0.3;
   width: 0;
@@ -605,37 +527,248 @@ hr {
 hr.visible {
   width: 100%;
 }
-/* ---------------------------------
-SEKCJA: STYLIZACJA ZDJĘCIA INSPIRUJĄCEGO (ROBAKOWSKI)
----------------------------------*/
 
 .robakowski-figure {
-  /* Ustawienia kontenera <figure> */
-  margin: 20px 0; /* Marginalne odstępy górny/dolny */
+  margin: 20px 0;
   padding: 0;
 }
 
 .robakowski-figure img {
-  /* Ustawienia obrazu */
-  max-width: 100%; /* Obraz jest responsywny */
+  max-width: 100%;
   height: auto;
-  display: block; /* Umożliwia centrowanie bloku */
-  margin: 0 auto; /* Centrowanie obrazu */
-  border: 1px solid #333; /* Estetyczna ramka pasująca do dark mode */
+  display: block;
+  margin: 0 auto;
+  border: 1px solid #333;
 }
 
 .robakowski-figure figcaption {
-  /* Ustawienia podpisu */
   text-align: center;
   font-size: 0.85em;
-  color: #ccc; /* Jasnoszary kolor podpisu */
+  color: #ccc;
   margin-top: 10px;
 }
 
-/* ---------------------------------*/
-/* --- RESPONSIVE --- */
-/* -------------------------------- */
+.container-information {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 60%;
+  max-width: 900px;
+}
 
+#startScreen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--color-bg);
+  color: var(--color-main);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  gap: 15px;
+  padding: 20px;
+  font-size: 20px;
+  cursor: pointer;
+  z-index: 10000;
+  font-family: 'Orbitron', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  box-shadow: inset 0 0 50px rgba(230, 57, 70, 0.2);
+  text-align: center;
+}
+
+.start-call {
+  color: blue;
+  white-space: nowrap;
+}
+.container-information p, 
+.container-information .intro-paragraph {
+  text-indent: 0 !important;
+  margin-left: 0 !important;
+  padding-left: 0 !important;
+  text-align: justify;
+}
+
+.container-information {
+  align-items: stretch !important; 
+}
+
+/* --- STYLE DLA SEKCE #09 IDENTYFIKACJA --- */
+
+.operator-list {
+    list-style: none;
+    padding: 0;
+}
+
+.operator-list li {
+    margin-bottom: 8px;
+}
+
+.user-name {
+    color: var(--color-main);
+    font-weight: bold;
+}
+
+.user-role {
+    color: var(--color-interactive-blue);
+}
+
+.action-link {
+    color: inherit;
+    text-decoration: none;
+    transition: opacity 0.3s ease;
+}
+
+.action-link:hover {
+    opacity: 0.8;
+    text-decoration: underline;
+}
+
+.user-status {
+    color: var(--color-accent);
+    font-weight: bold;
+}
+
+.user-uid {
+    opacity: 0.5;
+}
+
+code {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 2px 4px;
+    border-radius: 3px;
+    font-family: monospace;
+}
+@media (max-width: 1340px) {
+  .top-row {
+    transform: scale(0.9);
+    margin-top: -50px!important;
+  }
+  .windows {
+    border: 3px solid var(--color-secondary);
+  }
+}
+
+@media (max-width: 1200px) {
+  .top-row {
+    transform: scale(0.80);
+    margin-top: -90px!important;
+  }
+  .footer-bar {
+    margin-top: 70px!important;
+  }
+    .light {
+  top: -200px;
+
+}
+}
+
+@media (max-width: 1070px) {
+  .top-row {
+    transform: scale(0.70);
+    margin-top: -130px!important;
+  }
+    
+    .light {
+  top: -400px!important;
+
+}
+}
+
+@media (max-width: 768px) {
+  .footer-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    flex-direction: row;
+    justify-content: center;
+    padding: 0;
+    margin: 0;
+    border-top: 1px solid var(--color-border);
+    background-color: var(--color-bg);
+    z-index: 10000;
+    margin-top: 670px!important;
+
+}
+        .light {
+  top: -500px;
+  }
+  .footer-bar .footer-button {
+    height: auto;
+    padding: 5px 10px;
+    border-radius: 2px;
+    right: 0;
+    text-align: center;
+    font-size: 11px;
+    transition: none;
+    margin-top: -50px;
+  }
+  .footer-bar .footer-button::before {
+    content: none;
+  }
+  .footer-bar .footer-button:hover {
+    right: 0;
+  }
+  .footer-reset {
+    position: absolute;
+    top: -90px;
+    left: 40%;
+    transform: translateX(-50%);
+    margin: 0;
+    z-index: 10;
+  }
+  .windows {
+    border: 4px solid var(--color-secondary);
+  }
+  .top-row {
+    margin-top: -70px!important;
+  }
+}
+
+@media (max-width: 740px) {
+  .windows::-webkit-scrollbar {
+    width: 20px;
+  }
+}
+@media (max-width: 768px) and (min-width: 541px) {
+  body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+  .top-row {
+    display: flex;
+    justify-content: center !important;
+    align-items: center;
+    width: 100%;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+  .arrow-btn-left {
+    margin: 20px !important;
+  }
+  .footer-bar {
+    left: 0 !important;
+    right: 0 !important;
+    width: 100% !important;
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: center !important;
+    align-items: center !important;
+  }
+  .footer-bar .footer-button {
+    right: auto !important;
+    margin: 0 10px !important;
+  }
+}
 @media (max-width: 600px) {
   .header {
     flex-direction: column;
@@ -658,12 +791,10 @@ SEKCJA: STYLIZACJA ZDJĘCIA INSPIRUJĄCEGO (ROBAKOWSKI)
     width: 100%;
     text-align: center;
   }
-  h2,
-  .h2-command {
+  h2, .h2-command {
     padding-left: 15px;
     font-size: 18px;
   }
-  /* Dopasowanie symbolu dla responsywności Instrukcji */
   .h2-command::before {
     content: '>';
     width: 10px;
@@ -674,117 +805,113 @@ SEKCJA: STYLIZACJA ZDJĘCIA INSPIRUJĄCEGO (ROBAKOWSKI)
     margin-right: 5px;
   }
   .robakowski-figure {
-    /* Zmniejsz marginesy, aby oszczędzić pionową przestrzeń */
     margin: 15px 0;
   }
-
   .robakowski-figure figcaption {
-    /* Zmniejsz czcionkę podpisu, aby była bardziej kompaktowa */
     font-size: 0.75em;
     margin-top: 8px;
   }
-}
-/* --- RESPONSYWNOŚĆ: DUŻE EKRANY / LAPTOPY --- */
-@media (max-width: 1200px) {
-  .top-row {
-    padding: 0 10px;
+  .footer-reset {
+    left: 40%;
   }
-
-  .arrow-btn {
-    margin: 20px 10px;
-    width: 35px;
-    height: 35px;
-  }
-
-  .windows {
-    width: 100px;
-    height: 600px;
-  }
-}
-
-/* --- MNIEJSZY TABLET (ok. 900px i mniej) --- */
-@media (max-width: 900px) {
-  .windows {
-    width: 100px;
-    height: 500px;
-  }
-
-  .arrow-btn {
-    margin: 15px 5px;
-    width: 30px;
-    height: 30px;
-    font-size: 18px;
-  }
-}
-
-/* --- SMARTFON HORYZONTALNIE (ok. 650px i mniej) --- */
-@media (max-width: 650px) {
-  .windows {
-    width: 80px;
-    height: 400px;
-  }
-}
-
-/* --- SMARTFON WERTYKALNIE (ok. 480px i mniej) --- */
-@media (max-width: 480px) {
-  .windows {
-    width: 70px;
-    height: 350px;
-  }
-
-  .top-row {
-    padding: 0;
-  }
-
-  .arrow-btn {
-    margin: 10px 0;
-    width: 25px;
-    height: 25px;
-    font-size: 16px;
-  }
-}
-/* --- RESPONSYWNOŚĆ DLA FOOTER-BAR (Instrukcja/Opis) --- */
-@media (max-width: 768px) {
-  /* Przeniesienie paska na dół ekranu i dopasowanie układu */
-  .footer-bar {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    width: 100%;
-    flex-direction: row;
-    justify-content: space-around;
-    padding: 0;
-    margin: 0;
-    border-top: 1px solid var(--color-border);
-    background-color: var(--color-bg);
-    z-index: 10000;
-  }
-
-  /* Styl przycisków w pasku na małych ekranach */
   .footer-bar .footer-button {
-    width: 50%;
-    height: auto;
-    padding: 15px 5px;
-    border-radius: 0;
-    right: 0;
-    text-align: center;
-    font-size: 11px;
-    transition: none; /* usuwa animacje hover dla responsywności */
+    margin-top: -200px;
   }
+}
 
-  /* Usunięcie strzałki przed tekstem przycisku */
-  .footer-bar .footer-button::before {
-    content: none;
+@media (max-width: 540px) {
+  .container {
+    position: relative;
   }
-
-  /* Zapewnienie miejsca na dole, by treść nie była zasłonięta */
-  body {
-    padding-bottom: 70px;
+  .footer-reset {
+    left: 20%;
   }
+  .top-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    margin-top: -80px !important;
+  }
+  .arrow-btn, .footer-reset {
+    transform: scale(1.3);
+  }
+  .rolka-container {
+    order: 1;
+  }
+  #leftBtn {
+    order: 2;
+    margin: 20px 75px;
+  }
+  #rightBtn {
+    order: 3;
+    margin: 20px 75px;
+  }
+  .footer-bar {
+    position: relative !important;
+    top: 0 !important;
+    order: 4 !important;
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: center !important;
+    margin-top: -130px !important;
+    z-index: 9999 !important;
+    width: 100% !important;
+    height: 50px !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
+  .footer-bar .footer-button {
+    margin: 0 10px !important;
+    margin-top: 0 !important;
+    right: auto !important;
+    position: relative !important;
+    height: 35px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 5px 15px !important;
+    background-color: rgb(57, 6, 179) !important;
+    color: white !important;
+    font-size: 11px !important;
+    border-radius: 4px;
+  }
+}
 
-  /* Hover przycisków pozostaje prosty */
-  .footer-bar .footer-button:hover {
-    right: 0;
+@media (max-width: 400px) {
+  .top-row {
+    margin-top: -170px !important;
+  }
+  .footer-bar {
+    position: relative !important;
+    top: 0 !important;
+    margin-top: -190px !important;
+    z-index: 9999 !important;
+  }
+  .footer-bar .footer-button {
+    margin-top: 0px!important;
+    position: relative !important;
+    display: flex !important;
+  }
+  .top-row {
+    transform: scale(0.55);
+  }
+  
+    .light {
+  top: -500px!important;
+
+}
+}
+
+@media (orientation: landscape) {
+  .top-row {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    justify-content: center !important;
+    width: 100vw;
+  }
+  .rolka-container {
+    order: unset !important;
   }
 }

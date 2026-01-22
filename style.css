@@ -251,27 +251,41 @@ body > *:not(.background-css) {
 }
 
 .footer-reset {
-  color: rgb(70, 68, 68);
-  display: flex;
-  font-size: 14px;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  margin-top: -625px;
-  right: 0;
+  position: fixed !important; 
+  top: 2vw !important;     
+  left: 10vw !important;      
+  bottom: auto !important;      
+  right: auto !important;    
+  
+  /* Kontener nie musi mieć sztywnej wysokości, jeśli przycisk ją ma */
+  width: auto;
+  height: auto;
+  z-index: 10001;
+  display: block !important;
+  pointer-events: auto !important;
 }
 
 .footer-reset .footer-button {
-  color: rgb(70, 68, 68);
-  border: 1px solid rgb(70, 68, 68);
-  padding: 6px 6px 11px;
-  border-radius: 5px;
-  width: 50px;
-  height: 45px;
-  display: flex;
+
+  width: 60px;
+  height: 55px;
+  padding: 5px;
+  display: flex;            /* Flex wewnątrz przycisku, żeby wycentrować napis RESET */
   justify-content: center;
   align-items: center;
-  text-decoration: none;
+  
+  background-color: #000;
+  color: blue;
+  border: 1px solid blue;   /* Powrót do cieńszej ramki */
+  padding: 0;               /* Reset paddingu przy sztywnej szerokości */
+  cursor: pointer;
   font-family: 'Orbitron', sans-serif;
+  font-size: 14px;
+  text-transform: uppercase;
+  border-radius: 5px;
+  box-shadow: 0 0 10px blue;
   transition: all 0.3s ease;
+  text-decoration: none;
 }
 
 .footer-reset .footer-button:hover {
@@ -644,9 +658,14 @@ code {
     border-radius: 3px;
     font-family: monospace;
 }
+@media (max-width: 1700px) {
+  .top-row {
+    transform: scale(0.85);
+  }
+  }
+
 @media (max-width: 1340px) {
   .top-row {
-    transform: scale(0.9);
     margin-top: -50px!important;
   }
   .windows {
@@ -811,20 +830,12 @@ code {
     font-size: 0.75em;
     margin-top: 8px;
   }
-  .footer-reset {
-    left: 40%;
-  }
-  .footer-bar .footer-button {
-    margin-top: -200px;
-  }
+
 }
 
 @media (max-width: 540px) {
   .container {
     position: relative;
-  }
-  .footer-reset {
-    left: 20%;
   }
   .top-row {
     display: flex;
@@ -913,5 +924,36 @@ code {
   }
   .rolka-container {
     order: unset !important;
+  }
+}
+
+/* --- RESPONYWNOŚĆ --- */
+
+/* Dla średnich ekranów (np. tablety) */
+
+
+@media (max-width: 1700px) {
+  .footer-reset {
+    left: 15px !important;
+    top: 10px !important;
+  }
+  .footer-reset .footer-button {
+    width: 50px;
+    height: 45px;
+    font-size: 11px;
+  }
+}
+
+@media (max-width: 1600px) {
+  .footer-reset {
+    left: 5px !important;
+  }
+  }
+
+/* Dla małych ekranów (telefony) */
+@media (max-width: 768px) {
+  .footer-reset {
+    left: 50% !important;
+    transform: translateX(-50%);
   }
 }

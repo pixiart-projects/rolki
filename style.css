@@ -253,7 +253,7 @@ body > *:not(.background-css) {
 .footer-reset {
   position: fixed !important; 
   top: 2vw !important;     
-  left: 10vw !important;      
+  left: 10vw ;      
   bottom: auto !important;      
   right: auto !important;    
   
@@ -270,20 +270,19 @@ body > *:not(.background-css) {
   width: 60px;
   height: 55px;
   padding: 5px;
-  display: flex;            /* Flex wewnątrz przycisku, żeby wycentrować napis RESET */
+  display: flex;        
   justify-content: center;
   align-items: center;
   
   background-color: #000;
-  color: blue;
-  border: 1px solid blue;   /* Powrót do cieńszej ramki */
-  padding: 0;               /* Reset paddingu przy sztywnej szerokości */
+  color: var(--color-text);
+  border: 1px solid var(--color-secondary);  
+  padding: 0;              
   cursor: pointer;
   font-family: 'Orbitron', sans-serif;
   font-size: 14px;
   text-transform: uppercase;
   border-radius: 5px;
-  box-shadow: 0 0 10px blue;
   transition: all 0.3s ease;
   text-decoration: none;
 }
@@ -927,15 +926,10 @@ code {
   }
 }
 
-/* --- RESPONYWNOŚĆ --- */
-
-/* Dla średnich ekranów (np. tablety) */
-
 
 @media (max-width: 1700px) {
   .footer-reset {
-    left: 15px !important;
-    top: 10px !important;
+    left: 15vw ;
   }
   .footer-reset .footer-button {
     width: 50px;
@@ -944,13 +938,17 @@ code {
   }
 }
 
-@media (max-width: 1600px) {
+@media (max-width: 1650px) {
   .footer-reset {
-    left: 5px !important;
+    left: 10vw;
+  }
+  }
+  @media (max-width: 1450px) {
+  .footer-reset {
+    left: 10px;
   }
   }
 
-/* Dla małych ekranów (telefony) */
 @media (max-width: 768px) {
   .footer-reset {
     left: 50% !important;

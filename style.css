@@ -256,8 +256,6 @@ body > *:not(.background-css) {
   left: 10vw ;      
   bottom: auto !important;      
   right: auto !important;    
-  
-  /* Kontener nie musi mieć sztywnej wysokości, jeśli przycisk ją ma */
   width: auto;
   height: auto;
   z-index: 10001;
@@ -611,7 +609,7 @@ hr.visible {
   align-items: stretch !important; 
 }
 
-/* --- STYLE DLA SEKCE #09 IDENTYFIKACJA --- */
+
 
 .operator-list {
     list-style: none;
@@ -657,6 +655,7 @@ code {
     border-radius: 3px;
     font-family: monospace;
 }
+
 @media (max-width: 1700px) {
   .top-row {
     transform: scale(0.85);

@@ -1,4 +1,4 @@
-// --- 1. LOGIKA STRONY GŁÓWNEJ (PROJEKTU) ---
+// ---  LOGIKA STRONY GŁÓWNEJ (PROJEKTU) ---
 const mainContainer = document.getElementById('mainContainer');
 
 if (mainContainer) {
@@ -272,7 +272,7 @@ if (mainContainer) {
     });
 }
 
-// --- 2. OBSŁUGA KLAWIATURY ---
+// --- OBSŁUGA KLAWIATURY ---
 document.addEventListener('keydown', e => {
     if (mainContainer) {
         if (e.key === 'ArrowLeft' && !scrolling) startScrolling(-1);
@@ -294,7 +294,7 @@ document.addEventListener('keyup', e => {
     if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') stopScrolling();
 });
 
-// --- 3. SEKCJA ANIMACJI INTERFEJSU (Z OPTYMALIZACJĄ DLA CHROME) ---
+// ---  SEKCJA ANIMACJI INTERFEJSU (Z OPTYMALIZACJĄ DLA CHROME) ---
 document.addEventListener('DOMContentLoaded', () => {
     const headers = document.querySelectorAll('h2');
     const hrs = document.querySelectorAll('hr');
